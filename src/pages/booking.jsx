@@ -19,7 +19,8 @@ const UserForm = () => {
         <h1>St'anns service</h1>
         <h2>Book your vehicle</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <label>User Name</label>
+          <label className='InputContainer'>User Name</label>
+          
           <input
             className="Input"
             type="text"
@@ -27,7 +28,7 @@ const UserForm = () => {
           />
           {errors.userName && <span className="ErrorMessage">User Name is required</span>}
           <br />
-          <label>Vehicle Number</label>
+          <label className='InputContainer'>Vehicle Number</label>
           <input
             className="Input"
             type="text"
@@ -36,7 +37,7 @@ const UserForm = () => {
           />
           {errors.vehicleNumber && <span className="ErrorMessage">Vehicle Number is required</span>}
           <br />
-          <label>Phone Number</label>
+          <label className='InputContainer'>Phone Number</label>
           <input
             className="Input"
             type="tel"
@@ -44,7 +45,7 @@ const UserForm = () => {
           />
           {errors.phoneNumber && <span className="ErrorMessage">Phone Number is required and should be 10 digits</span>}
           <br />
-          <label>Booking Date</label>
+          <label className='InputContainer'>Booking Date</label>
           <DatePicker
             className="StyledDatePicker"
             selected={startDate}
@@ -54,7 +55,9 @@ const UserForm = () => {
           <br />
           {startDate === null && <span className="ErrorMessage">Booking Date is required</span>}
           <br />
-          <button className="Button" type="submit">Submit</button>
+          <div className="ButtonContainer">
+            <button className="Button" type="submit">Submit</button>
+          </div>
         </form>
       </div>
     </div>

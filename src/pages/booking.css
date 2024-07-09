@@ -1,9 +1,9 @@
 /* UserForm.css */
 body {
     background-color: white;
-    margin: 0; /* Remove default margin */
-    padding: 0; /* Remove default padding */
-    font-family: Arial, sans-serif; /* Optional: Set a global font */
+    margin: 0; 
+    padding: 0; 
+    font-family: Arial, sans-serif; /
   }
 .PageContainer {
     display: flex;
@@ -11,7 +11,8 @@ body {
     justify-content: center;
     align-items: center;
     width: 100%;
-    background-color: white;
+   
+    
   }
   
   .FormContainer {
@@ -20,26 +21,27 @@ body {
     max-width: 500px;
     width: 100%;
     padding: 20px;
-    
-    border-radius: 10px;
     background-color: white;
+    border-radius: 10px;
+    
     color: black;
     /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); */
   }
   
+  
   @media (max-width: 600px) {
     .FormContainer {
-      padding: 10px;
-      max-width: 100%;
+      padding: 20px 10px;
+      max-width: 90%;
     }
   }
   
   .InputContainer {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    
     position: relative;
-    margin-bottom: 20px;
+    margin-top: 20px;
     
   }
   
@@ -56,7 +58,7 @@ body {
   @media (max-width: 600px) {
     .Input {
       font-size: 14px;
-      padding: 8px;
+      padding: 8px ;
     }
   }
   
@@ -82,7 +84,11 @@ body {
       padding: 8px;
     }
   }
-  
+  .ButtonContainer {
+    display: flex;
+    justify-content: center; 
+    width: 100%;
+  }
   .Button {
     padding: 10px;
     font-size: 16px;
@@ -92,12 +98,16 @@ body {
     border-radius: 5px;
     cursor: pointer;
     width: 100%;
+    width: 50%; /* Reduce width to 50% */
+    max-width: 200px;
+   
   }
   
   @media (max-width: 600px) {
     .Button {
       font-size: 14px;
       padding: 8px;
+      width: 100%;
     }
   }
   
