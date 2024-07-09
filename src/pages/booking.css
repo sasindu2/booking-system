@@ -1,93 +1,119 @@
-/* .PageContainer .styled.div
-  {display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  width: 100%;}
-
-
- .FormContainer .styled.div
-  {display: flex;
-  flex-direction: column;
-  max-width: 500px;
-  width: 100%;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  background-color: #f9f9f9;
-  color: black;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-
-
+/* UserForm.css */
+body {
+    background-color: white;
+    margin: 0; 
+    padding: 0; 
+    font-family: Arial, sans-serif; /
+  }
+.PageContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+   
+    
+  }
+  
+  .FormContainer {
+    display: flex;
+    flex-direction: column;
+    max-width: 500px;
+    width: 100%;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    
+    color: black;
+    /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); */
+  }
+  
+  
   @media (max-width: 600px) {
+    .FormContainer {
+      padding: 20px 10px;
+      max-width: 90%;
+    }
+  }
+  
+  .InputContainer {
+    display: flex;
+    flex-direction: column;
+    
+    position: relative;
+    margin-top: 20px;
+    
+  }
+  
+  .Input {
     padding: 10px;
-    max-width: 100%;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+    
   }
-  }
-
-.InputContainer .styled.div{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-  margin-bottom: 20px;
-}
-
-.Input .styled.input{
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  width: 100%;
-  box-sizing: border-box;
-
+  
   @media (max-width: 600px) {
-    font-size: 14px;
-    padding: 8px;
+    .Input {
+      font-size: 14px;
+      padding: 8px ;
+    }
   }
-}
-
-/* const StyledDatePicker = styled(DatePicker)`
-  width: 100%;
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-
-  &::placeholder {
+  
+  .StyledDatePicker {
+    width: 100%;
+    padding: 10px;
+    font-size: 18px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .StyledDatePicker::placeholder {
     color: #ccc;
   }
-
-  &:focus {
+  
+  .StyledDatePicker:focus {
     border-color: #4caf50;
   }
-    @media (max-width: 600px) {
-    font-size: 14px;
-    padding: 8px;
-  }
-
-`; 
-
-.Button .styled.button{
-  padding: 10px;
   
-  font-size: 16px;
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  width: 100%;
-
   @media (max-width: 600px) {
-    font-size: 14px;
-    padding: 8px;
+    .StyledDatePicker {
+      font-size: 14px;
+      padding: 8px;
+    }
   }
-
-}
-.ErrorMessage .styled.span
- { color: red;
-  font-size: 14px;
-  margin-bottom: 10px;
-} */
+  .ButtonContainer {
+    display: flex;
+    justify-content: center; 
+    width: 100%;
+  }
+  .Button {
+    padding: 10px;
+    font-size: 16px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    width: 50%; /* Reduce width to 50% */
+    max-width: 200px;
+   
+  }
+  
+  @media (max-width: 600px) {
+    .Button {
+      font-size: 14px;
+      padding: 8px;
+      width: 100%;
+    }
+  }
+  
+  .ErrorMessage {
+    color: red;
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+  
