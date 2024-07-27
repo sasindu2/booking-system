@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import DataTable from "react-data-table-component";
 import styled from "styled-components";
-import GlobalStyle from "./globalstyle";
+import GlobalStyle from "../globalstyle";
 
 const data = [
   {

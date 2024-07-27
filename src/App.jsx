@@ -1,6 +1,6 @@
 import React from "react";
-import UserForm from "./pages/booking";
-import Admin from "./pages/Admin";
+import UserForm from "./pages/Booking/Booking";
+import Admin from "./pages/Admin/Admin";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 

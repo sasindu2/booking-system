@@ -2,8 +2,8 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import "./booking.css";
-import GlobalStyle from "./globalstyle";
+import "../Booking/Booking.css";
+import GlobalStyle from "../globalstyle";
 
 const UserForm = () => {
   const {
@@ -80,6 +80,11 @@ const UserForm = () => {
               <button className="Button" type="submit">
                 Submit
               </button>
+            </div>
+            <div className="condition-footer">
+              <a href="#">Terms of Use | </a>
+              <span className="privacy-policy"></span>
+              <a href="#">Privacy Policy</a>
             </div>
           </form>
         </div>
