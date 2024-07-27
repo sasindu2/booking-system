@@ -1,17 +1,19 @@
-import React from 'react';
-import UserForm from './pages/booking';
-import GlobalStyle from './pages/globalstyle';
+import React from "react";
+import UserForm from "./pages/booking";
+import Admin from "./pages/Admin";
+import Sample from "./pages/Sample";
 
-
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
     <>
-      <GlobalStyle />
-      <div className="App">
-        <UserForm />
-        
-      </div>
+      <BrowserRouter>
+        <Routes>
+          <Route index element={<UserForm />} />
+          <Route path="/admin" element={<Admin />} />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }
