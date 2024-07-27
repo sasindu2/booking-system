@@ -1,7 +1,6 @@
 import React from "react";
 import UserForm from "./pages/booking";
 import Admin from "./pages/Admin";
-import Sample from "./pages/Sample";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 

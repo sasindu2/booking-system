@@ -12,10 +12,11 @@
   "dependencies": {
     "date-fns": "^3.6.0",
     "react": "^18.3.1",
+    "react-data-table-component": "^7.6.2",
     "react-datepicker": "^7.3.0",
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.52.1",
-    "styled-components": "^6.1.11"
+    "styled-components": "^6.1.12"
   },
   "devDependencies": {
     "@types/react": "^18.3.3",
