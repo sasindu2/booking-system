@@ -14,9 +14,26 @@ const UserForm = () => {
   } = useForm();
   const [startDate, setStartDate] = React.useState(null);
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     data.bookingDate = startDate;
-    console.log(data);
+
+    try {
+      const response = await fetch("http://localhost:5000/api/bookings", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (response.ok) {
+        console.log("Booking successfully created");
+      } else {
+        console.error("Error creating booking");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   return (
@@ -24,16 +41,16 @@ const UserForm = () => {
       <GlobalStyle />
       <div className="PageContainer">
         <div className="FormContainer">
-          <h1>St'anns service</h1>
-          <h2>Book your vehicle</h2>
+          <h1>St'Anns Service</h1>
+          <h2>Booking system</h2>
           <form onSubmit={handleSubmit(onSubmit)}>
             <label className="InputContainer">User Name</label>
-
             <input
               className="Input"
               type="text"
               {...register("userName", { required: true })}
             />
+            <br />
             {errors.userName && (
               <span className="ErrorMessage">User Name is required</span>
             )}
@@ -45,6 +62,7 @@ const UserForm = () => {
               {...register("vehicleNumber", { required: true })}
               placeholder="ex, ABC-1234"
             />
+            <br />
             {errors.vehicleNumber && (
               <span className="ErrorMessage">Vehicle Number is required</span>
             )}
@@ -58,6 +76,7 @@ const UserForm = () => {
                 pattern: /^[0-9]{10}$/,
               })}
             />
+            <br />
             {errors.phoneNumber && (
               <span className="ErrorMessage">
                 Phone Number is required and should be 10 digits

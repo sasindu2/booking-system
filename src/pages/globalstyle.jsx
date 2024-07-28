@@ -15,7 +15,7 @@ const GlobalStyle = createGlobalStyle`
 
   h1 {
     text-align: center;
-    color: red;
+    color: tomato;
     margin-bottom: 20px;
   }
 `;
