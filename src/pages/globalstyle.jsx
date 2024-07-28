@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -15,7 +15,7 @@ const GlobalStyle = createGlobalStyle`
 
   h1 {
     text-align: center;
-    color: black;
+    color: tomato;
     margin-bottom: 20px;
   }
 `;
