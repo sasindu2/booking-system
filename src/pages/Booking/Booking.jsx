@@ -3,7 +3,6 @@ import { useForm } from "react-hook-form";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "../Booking/Booking.css";
-import GlobalStyle from "../globalstyle";
 
 const UserForm = () => {
   const {
@@ -15,7 +14,16 @@ const UserForm = () => {
   const [startDate, setStartDate] = React.useState(null);
 
   const onSubmit = async (data) => {
-    data.bookingDate = startDate;
+    const cpy = new Date(
+      startDate.getFullYear(),
+      startDate.getMonth(),
+      startDate.getDate()
+    );
+
+    data.bookingDate = cpy;
+    data.createdDate = new Date();
+
+    console.log(data);
 
     try {
       const response = await fetch("http://localhost:5000/api/bookings", {
@@ -38,7 +46,6 @@ const UserForm = () => {
 
   return (
     <>
-      <GlobalStyle />
       <div className="PageContainer">
         <div className="FormContainer">
           <h1>St'Anns Service</h1>
