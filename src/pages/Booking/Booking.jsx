@@ -10,6 +10,7 @@ const UserForm = () => {
     handleSubmit,
     formState: { errors },
     setValue,
+    reset,
   } = useForm();
   const [startDate, setStartDate] = React.useState(null);
 
@@ -36,6 +37,9 @@ const UserForm = () => {
 
       if (response.ok) {
         console.log("Booking successfully created");
+        reset();
+        setStartDate(null);
+        console.log("Form fields reset");
       } else {
         console.error("Error creating booking");
       }
