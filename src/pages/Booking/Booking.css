@@ -1,0 +1,160 @@
+/* UserForm.css */
+
+body {
+  background-color: rgb(254, 255, 247);
+  margin: 0; 
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif; /
+}
+/* body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+ 
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+} */
+
+h1 {
+  font-size: 32px;
+  text-align: center;
+  color: tomato;
+  margin-bottom: 18px;
+}
+h2 {
+  font-size: 24px;
+  margin: 0;
+}
+
+
+.PageContainer form {
+  width: 340px;
+}
+
+.FormContainer {
+  position: relative;
+  display: flex;
+  
+  flex-direction: column;
+  width: 100%;
+  background-color: rgb(254, 255, 247);
+  border-radius: 10px;
+  margin: 0 auto;
+  
+  color: black;
+  /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); */
+}
+
+.InputContainer {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  position: relative;
+  margin-top: 18px;
+  
+}
+
+.Input {
+  padding: 10px;
+  height: 42px;
+  background-color: rgb(241, 241, 241, 0);
+  font-size: 16px;
+  border: 1px solid rgb(30, 30, 30, 0.3);
+  border-radius: 5px;
+  width: 100%;
+  box-sizing: border-box;
+  color: rgb(75, 75, 75);
+  
+}
+
+.StyledDatePicker {
+  max-width: 100%;
+  height: 21px;
+  background-color: rgb(254, 255, 247);
+  padding: 10px;
+  font-size: 18px;
+  border: 1px solid #a3a3a3;
+  color: #a8a9a8;
+  border-radius: 5px;
+}
+
+.StyledDatePicker::placeholder {
+  color: #ccc;
+}
+
+.StyledDatePicker:focus {
+  border-color: #4caf50;
+}
+
+.ButtonContainer {
+  display: flex;
+  justify-content: center; 
+  width: 100%;
+}
+
+.Button {
+  padding: 10px;
+  font-size: 18px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font: bold;
+  width: 100%;
+  height: 42px; /* Reduce width to 50% */
+}
+
+.ErrorMessage {
+  position: relative;
+  color: red;
+  font-size: 12px;
+  margin-bottom: 10px;
+  /* display: block; */
+}
+.condition-footer {
+  text-align: center;
+  margin-top: 32px;
+}
+
+.condition-footer a {
+  font-size: 12px;
+  color: rgb(67, 66, 66);
+  cursor: pointer;
+}
+.ButtonContainer :hover{
+background-color: #8e8e8e;
+}
+
+@media (min-width: 540px) {
+  .FormContainer {
+    padding: 20px 10px;
+    max-width: 340px;
+  }
+
+  .FormContainer h1 {
+    font-size: 2.8em;
+  }
+
+  .Input {
+    font-size: 14px;
+    padding: 8px ;
+    
+  }
+
+  .Button {
+    font-size: 14px;
+    padding: 8px;
+    width: 100%;
+  }
+
+  .StyledDatePicker {
+    font-size: 14px;
+    padding: 8px;
+  }
+  
+}

@@ -3,13 +3,14 @@ const Booking = require('../models/booking');
 
 // Create a new booking
 exports.createBooking = async (req, res) => {
-  const { userName, vehicleNumber, phoneNumber, bookingDate } = req.body;
+  const { userName, vehicleNumber, phoneNumber, bookingDate, createdDate } = req.body;
 
   const booking = new Booking({
     userName,
     vehicleNumber,
     phoneNumber,
     bookingDate,
+    createdDate
   });
 
   try {
