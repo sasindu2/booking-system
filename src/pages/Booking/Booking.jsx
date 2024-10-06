@@ -37,6 +37,9 @@ const UserForm = () => {
 
       if (response.ok) {
         console.log("Booking successfully created");
+
+        alert("Successfully booked!");
+
         reset();
         setStartDate(null);
         console.log("Form fields reset");
