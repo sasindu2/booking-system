@@ -1,11 +1,27 @@
 import React, { useState, useEffect } from "react";
 import DataTable from "react-data-table-component";
 import styled from "styled-components";
-// import GlobalStyle from "../globalstyle";
+import { format } from "date-fns";
 
 const columns = [
-  { name: "Booking Date", selector: (row) => row.bookingDate, sortable: true },
+  {
+    name: "Booking Date",
+    selector: (row) =>
+      row.bookingDate ? format(new Date(row.bookingDate), "yyyy-MM-dd") : "N/A", // Check for valid date
+    sortable: true,
+  },
+  {
+    name: "Submission Time",
+    selector: (row) => row.submissionTime,
+    sortable: true,
+    format: (row) =>
+      row.submissionTime
+        ? format(new Date(row.submissionTime), "yyyy-MM-dd HH:mm:ss")
+        : "N/A", // Check for valid submission time
+  },
+
   { name: "User Name", selector: (row) => row.userName, sortable: true },
+
   {
     name: "Vehicle Number",
     selector: (row) => row.vehicleNumber,
@@ -104,7 +120,11 @@ export default function Admin() {
       item.bookingDate.includes(filterText) ||
       item.userName.toLowerCase().includes(filterText.toLowerCase()) ||
       item.vehicleNumber.toLowerCase().includes(filterText.toLowerCase()) ||
-      item.phoneNumber.includes(filterText)
+      item.phoneNumber.includes(filterText) ||
+      (item.submissionTime &&
+        format(new Date(item.submissionTime), "yyyy-MM-dd HH:mm:ss").includes(
+          filterText
+        ))
   );
 
   return (

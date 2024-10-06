@@ -15,16 +15,20 @@ const UserForm = () => {
   const [startDate, setStartDate] = React.useState(null);
 
   const onSubmit = async (data) => {
-    const cpy = new Date(
-      startDate.getFullYear(),
-      startDate.getMonth(),
-      startDate.getDate()
-    );
+    if (!startDate) {
+      alert("Please select a booking date.");
+      return;
+    }
 
-    data.bookingDate = cpy;
-    data.createdDate = new Date();
+    // Format booking date and submission time
+    const formattedBookingDate = startDate.toISOString(); // Ensure correct format
+    const submissionTime = new Date().toISOString(); // Current time in ISO format
 
-    console.log(data);
+    // Attach to data object
+    data.bookingDate = formattedBookingDate;
+    data.submissionTime = submissionTime;
+
+    console.log("Data being sent:", data);
 
     try {
       const response = await fetch("http://localhost:5000/api/bookings", {

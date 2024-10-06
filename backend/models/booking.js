@@ -19,6 +19,10 @@ const BookingSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
+  submissionTime: {
+    type: Date,
+    required: true
+  }
 });
 
 module.exports = mongoose.model('Booking', BookingSchema);
