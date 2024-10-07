@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -12,23 +12,45 @@ const UserForm = () => {
     setValue,
     reset,
   } = useForm();
-  const [startDate, setStartDate] = React.useState(null);
+  const [startDate, setStartDate] = useState(null);
+  const [blockedDates, setBlockedDates] = useState([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState(null);
+
+  useEffect(() => {
+    const fetchBlockedDates = async () => {
+      try {
+        const response = await fetch(
+          "http://localhost:5000/api/bookings/blocked-dates"
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch blocked dates");
+        }
+        const data = await response.json();
+        setBlockedDates(data.map((date) => new Date(date)));
+      } catch (error) {
+        console.error("Error fetching blocked dates:", error);
+        setSubmitError("Failed to load blocked dates. Please try again later.");
+      }
+    };
+
+    fetchBlockedDates();
+  }, []);
 
   const onSubmit = async (data) => {
     if (!startDate) {
-      alert("Please select a booking date.");
+      setSubmitError("Please select a booking date.");
       return;
     }
 
-    // Format booking date and submission time
-    const formattedBookingDate = startDate.toISOString(); // Ensure correct format
-    const submissionTime = new Date().toISOString(); // Current time in ISO format
+    setIsSubmitting(true);
+    setSubmitError(null);
 
-    // Attach to data object
+    const formattedBookingDate = startDate.toISOString();
+    const submissionTime = new Date().toISOString();
+
     data.bookingDate = formattedBookingDate;
     data.submissionTime = submissionTime;
-
-    console.log("Data being sent:", data);
 
     try {
       const response = await fetch("http://localhost:5000/api/bookings", {
@@ -40,21 +62,23 @@ const UserForm = () => {
       });
 
       if (response.ok) {
-        console.log("Booking successfully created");
-
-        alert("Successfully booked!");
-
+        alert("Booking successfully created!");
         reset();
         setStartDate(null);
-        console.log("Form fields reset");
       } else {
-        console.error("Error creating booking");
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to create booking");
       }
     } catch (error) {
       console.error("Error:", error);
+      setSubmitError(
+        error.message ||
+          "An error occurred while creating the booking. Please try again."
+      );
+    } finally {
+      setIsSubmitting(false);
     }
   };
-
   return (
     <>
       <div className="PageContainer">
@@ -107,6 +131,9 @@ const UserForm = () => {
               selected={startDate}
               onChange={(date) => setStartDate(date)}
               dateFormat="yyyy/MM/dd"
+              excludeDates={blockedDates}
+              minDate={new Date()}
+              placeholderText="Select a date"
             />
             <br />
             {startDate === null && (
