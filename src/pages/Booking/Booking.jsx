@@ -2,8 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import "../Booking/Booking.css";
-import GlobalStyle from "../globalstyle";
+import "./Booking.css";
 
 const UserForm = () => {
   const {
@@ -11,11 +10,25 @@ const UserForm = () => {
     handleSubmit,
     formState: { errors },
     setValue,
+    reset,
   } = useForm();
   const [startDate, setStartDate] = React.useState(null);
 
   const onSubmit = async (data) => {
-    data.bookingDate = startDate;
+    if (!startDate) {
+      alert("Please select a booking date.");
+      return;
+    }
+
+    // Format booking date and submission time
+    const formattedBookingDate = startDate.toISOString(); // Ensure correct format
+    const submissionTime = new Date().toISOString(); // Current time in ISO format
+
+    // Attach to data object
+    data.bookingDate = formattedBookingDate;
+    data.submissionTime = submissionTime;
+
+    console.log("Data being sent:", data);
 
     try {
       const response = await fetch("http://localhost:5000/api/bookings", {
@@ -28,6 +41,12 @@ const UserForm = () => {
 
       if (response.ok) {
         console.log("Booking successfully created");
+
+        alert("Successfully booked!");
+
+        reset();
+        setStartDate(null);
+        console.log("Form fields reset");
       } else {
         console.error("Error creating booking");
       }
@@ -38,7 +57,6 @@ const UserForm = () => {
 
   return (
     <>
-      <GlobalStyle />
       <div className="PageContainer">
         <div className="FormContainer">
           <h1>St'Anns Service</h1>

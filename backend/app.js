@@ -18,6 +18,8 @@ app.use(bodyParser.json());
 app.use('/api/bookings', bookingRoutes);
 app.get("/", (req, res) => res.json({done: 'yes'}))
 
+console.log('Starting server...');
+
 // Start the server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
