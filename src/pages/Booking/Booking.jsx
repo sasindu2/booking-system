@@ -36,10 +36,23 @@ const UserForm = () => {
 
     fetchBlockedDates();
   }, []);
+  const isAvailableDate = (dateString) => {
+    if (!dateString) return false;
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) return false; // Check if the date is valid
+    const day = date.getDay();
+    const isSunday = day === 0;
+    const isBlocked = blockedDates.includes(dateString);
+    return !isSunday && !isBlocked;
+  };
 
   const onSubmit = async (data) => {
     if (!startDate) {
       setSubmitError("Please select a booking date.");
+      return;
+    }
+    if (!isAvailableDate(startDate)) {
+      setSubmitError("Selected date is not available for booking.");
       return;
     }
 
@@ -131,6 +144,7 @@ const UserForm = () => {
               selected={startDate}
               onChange={(date) => setStartDate(date)}
               dateFormat="yyyy/MM/dd"
+              filterDate={isAvailableDate}
               excludeDates={blockedDates}
               minDate={new Date()}
               placeholderText="Select a date"
@@ -141,8 +155,12 @@ const UserForm = () => {
             )}
             <br />
             <div className="ButtonContainer">
-              <button className="Button" type="submit">
-                Submit
+              <button
+                className="Button"
+                type="submit"
+                disabled={isSubmitting || !isAvailableDate(startDate)}
+              >
+                {isSubmitting ? "Submitting..." : "Submit"}
               </button>
             </div>
             <div className="condition-footer">
