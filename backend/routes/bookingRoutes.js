@@ -9,7 +9,13 @@ router.post('/', bookingController.createBooking);
 // Get all bookings
 router.get('/', bookingController.getAllBookings);
 
-// New route for getting blocked dates
+// getting blocked dates
 router.get('/blocked-dates', bookingController.getBlockedDates);
+
+// get the current booking limit
+router.get('/limit', bookingController.getBookingLimit);
+
+//  update the booking limit
+router.put('/limit', bookingController.updateBookingLimit);
 
 module.exports = router;

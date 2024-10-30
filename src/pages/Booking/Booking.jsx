@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./Booking.css";
+import Swal from "sweetalert2";
 
 const UserForm = () => {
   const {
@@ -18,24 +19,23 @@ const UserForm = () => {
   const [submitError, setSubmitError] = useState(null);
 
   useEffect(() => {
-    const fetchBlockedDates = async () => {
-      try {
-        const response = await fetch(
-          "http://localhost:5000/api/bookings/blocked-dates"
-        );
-        if (!response.ok) {
-          throw new Error("Failed to fetch blocked dates");
-        }
-        const data = await response.json();
-        setBlockedDates(data.map((date) => new Date(date)));
-      } catch (error) {
-        console.error("Error fetching blocked dates:", error);
-        setSubmitError("Failed to load blocked dates. Please try again later.");
-      }
-    };
-
     fetchBlockedDates();
   }, []);
+  const fetchBlockedDates = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:5000/api/bookings/blocked-dates"
+      );
+      if (!response.ok) {
+        throw new Error("Failed to fetch blocked dates");
+      }
+      const data = await response.json();
+      setBlockedDates(data.map((date) => new Date(date)));
+    } catch (error) {
+      console.error("Error fetching blocked dates:", error);
+      setSubmitError("Failed to load blocked dates. Please try again later.");
+    }
+  };
   const isAvailableDate = (dateString) => {
     if (!dateString) return false;
     const date = new Date(dateString);
@@ -75,9 +75,15 @@ const UserForm = () => {
       });
 
       if (response.ok) {
-        alert("Booking successfully created!");
+        Swal.fire({
+          title: "Good job!",
+          text: "You clicked the button!",
+          icon: "success",
+        });
         reset();
         setStartDate(null);
+        // Fetch updated blocked dates after successful booking
+        fetchBlockedDates();
       } else {
         const errorData = await response.json();
         throw new Error(errorData.message || "Failed to create booking");
@@ -163,6 +169,7 @@ const UserForm = () => {
                 {isSubmitting ? "Submitting..." : "Submit"}
               </button>
             </div>
+            {submitError && <p className="ErrorMessage">{submitError}</p>}
             <div className="condition-footer">
               <a href="#">Terms of Use | </a>
               <span className="privacy-policy"></span>

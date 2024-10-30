@@ -22,6 +22,11 @@ const BookingSchema = new mongoose.Schema({
   submissionTime: {
     type: Date,
     required: true
+  },
+  status:{
+    type:String,
+    required:true,
+    enum: ['pending', 'accept', 'done', 'delete'], 
   }
 });
 

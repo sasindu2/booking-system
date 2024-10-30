@@ -96,10 +96,52 @@ const FixedContainer = styled.div`
   padding: 20px;
   background-color: #fff; // Add a background color to ensure content below doesn't show through
 `;
+const LimitContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+`;
+
+const LimitInput = styled.input`
+  width: 60px;
+  padding: 5px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+`;
+
+const UpdateButton = styled.button`
+  padding: 5px 10px;
+  font-size: 14px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #45a049;
+  }
+`;
+const LimitDisplay = styled.div`
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 5px;
+  color: black;
+`;
+
+const LimitForm = styled.form`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+`;
 
 export default function Admin() {
   const [filterText, setFilterText] = useState("");
   const [data, setData] = useState([]);
+  const [bookingLimit, setBookingLimit] = useState(5);
+  const [newLimit, setNewLimit] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -111,9 +153,44 @@ export default function Admin() {
         console.error("Error fetching data:", error);
       }
     };
+    const fetchBookingLimit = async () => {
+      try {
+        const response = await fetch(
+          "http://localhost:5000/api/bookings/limit"
+        );
+        const result = await response.json();
+        setBookingLimit(result.limit);
+      } catch (error) {
+        console.error("Error fetching booking limit:", error);
+      }
+    };
 
     fetchData();
+    fetchBookingLimit();
   }, []);
+
+  const handleUpdateLimit = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/api/bookings/limit", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ limit: parseInt(newLimit) }),
+      });
+      const result = await response.json();
+      if (response.ok) {
+        setBookingLimit(result.limit);
+        setNewLimit("");
+        alert("Booking limit updated successfully!");
+      } else {
+        throw new Error(result.message);
+      }
+    } catch (error) {
+      console.error("Error updating booking limit:", error);
+      alert("Failed to update booking limit. Please try again.");
+    }
+  };
 
   const filteredData = data.filter(
     (item) =>
@@ -138,6 +215,19 @@ export default function Admin() {
             value={filterText}
             onChange={(e) => setFilterText(e.target.value)}
           />
+          <LimitContainer>
+            <LimitDisplay>Current Booking Limit: {bookingLimit}</LimitDisplay>
+            <LimitInput
+              type="number"
+              value={newLimit}
+              onChange={(e) => setNewLimit(e.target.value)}
+              placeholder="New limit"
+              min="1"
+            />
+            <UpdateButton onClick={handleUpdateLimit}>
+              Update Limit
+            </UpdateButton>
+          </LimitContainer>
         </Header>
         <TableHeader>
           <DataTable
