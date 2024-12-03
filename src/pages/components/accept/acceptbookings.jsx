@@ -2,14 +2,15 @@ import React, { useState, useEffect } from "react";
 import DataTable from "react-data-table-component";
 import styled from "styled-components";
 import { format } from "date-fns";
-import { useNavigate } from "react-router-dom"; // Assuming you're using React Router for navigation
+import { useNavigate } from "react-router-dom";
 
 const Header = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: center; // Center the buttons
   align-items: center;
   margin-bottom: 20px;
 `;
+
 const SearchInput = styled.input`
   width: 300px;
   padding: 10px 40px 10px 20px;
@@ -30,131 +31,77 @@ const SearchInput = styled.input`
     color: #999;
   }
 
-  /* Add a search icon */
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23999' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z'%3E%3C/path%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: calc(100% - 10px) center;
 `;
 
 const TableHeader = styled.div`
-  height: 400px; /* Define a fixed height for the table container */
+  height: 400px;
   overflow-y: auto;
 
-  /* Hide scrollbar icon for Chrome, Safari, and Opera */
   ::-webkit-scrollbar {
-    width: 0px; /* Hides the scrollbar width */
+    width: 0px;
   }
 
-  /* Hide scrollbar icon for Firefox */
-  scrollbar-width: thin; /* Makes the scrollbar very thin */
-  scrollbar-color: transparent transparent; /* Makes the scrollbar invisible */
-
-  /* Hide scrollbar icon for IE, Edge */
-  -ms-overflow-style: none; /* Hides the scrollbar icon for IE and Edge */
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+  -ms-overflow-style: none;
 
   .rdt_TableHeadRow {
-    background-color: #4caf50; /* Change this color to your preference */
+    background-color: #4caf50;
   }
   .rdt_TableCol {
-    color: white; /* Change text color to your preference */
+    color: white;
   }
 `;
+
 const FixedContainer = styled.div`
   position: fixed;
-
   top: 0;
   left: 10px;
   right: 10px;
   bottom: 0;
-  // overflow-y: auto;
   padding: 20px;
-  background-color: #fff; // Add a background color to ensure content below doesn't show through
+  background-color: #fff;
 `;
-const LimitContainer = styled.div`
+
+const CenteredButtonContainer = styled.div`
   display: flex;
-  align-items: center;
-  gap: 10px;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
 `;
 
-const LimitInput = styled.input`
-  width: 60px;
-  padding: 5px;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-`;
-
-const UpdateButton = styled.button`
-  padding: 5px 10px;
-  font-size: 14px;
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #45a049;
-  }
-`;
-const LimitDisplay = styled.div`
-  font-size: 18px;
-  font-weight: bold;
-  margin-top: 5px;
-  color: black;
-`;
-
-const LimitForm = styled.form`
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 20px;
-`;
-
-export default function Admin() {
+export default function AcceptPage() {
   const [filterText, setFilterText] = useState("");
   const [data, setData] = useState([]);
-  const [bookingLimit, setBookingLimit] = useState(5);
-  const [newLimit, setNewLimit] = useState("");
   const navigate = useNavigate();
-  const handleStatusChange = (status) => {
-    navigate(`/status/${status}`); // Navigate to a specific page based on status
-  };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/bookings");
+        const response = await fetch(
+          "http://localhost:5000/api/bookings/accepted"
+        );
         const result = await response.json();
         setData(result);
       } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-    const fetchBookingLimit = async () => {
-      try {
-        const response = await fetch(
-          "http://localhost:5000/api/bookings/limit"
-        );
-        const result = await response.json();
-        setBookingLimit(result.limit);
-      } catch (error) {
-        console.error("Error fetching booking limit:", error);
+        console.error("Error fetching accepted bookings:", error);
       }
     };
 
     fetchData();
-    fetchBookingLimit();
   }, []);
 
-  const handleAccept = async (id) => {
+  const handleDone = async (id) => {
     try {
       const response = await fetch(
         `http://localhost:5000/api/bookings/${id}/status`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ status: "accept" }),
+          body: JSON.stringify({ status: "done" }),
         }
       );
 
@@ -162,41 +109,18 @@ export default function Admin() {
         throw new Error("Failed to update booking status");
       }
 
-      // Update the state to remove the accepted booking
+      // Update the state to remove the done booking
       setData((prevData) => prevData.filter((item) => item._id !== id));
     } catch (error) {
       console.error("Error updating booking status:", error);
     }
   };
 
-  const handleUpdateLimit = async () => {
-    try {
-      const response = await fetch("http://localhost:5000/api/bookings/limit", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ limit: parseInt(newLimit) }),
-      });
-      const result = await response.json();
-      if (response.ok) {
-        setBookingLimit(result.limit);
-        setNewLimit("");
-        alert("Booking limit updated successfully!");
-      } else {
-        throw new Error(result.message);
-      }
-    } catch (error) {
-      console.error("Error updating booking limit:", error);
-      alert("Failed to update booking limit. Please try again.");
-    }
-  };
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this booking?")) {
       return;
     }
 
-    setIsLoading(true);
     try {
       const response = await fetch(`http://localhost:5000/api/bookings/${id}`, {
         method: "DELETE",
@@ -212,31 +136,35 @@ export default function Admin() {
     } catch (error) {
       console.error("Error deleting booking:", error);
       alert(error.message || "An error occurred while deleting the booking");
-    } finally {
-      setIsLoading(false);
     }
   };
+
+  const handleStatusChange = (status) => {
+    navigate(`/status/${status}`);
+  };
+
   const columns = [
     {
       name: "Booking Date",
       selector: (row) =>
         row.bookingDate
           ? format(new Date(row.bookingDate), "yyyy-MM-dd")
-          : "N/A", // Check for valid date
+          : "N/A",
       sortable: true,
     },
     {
       name: "Submission Time",
-      selector: (row) => row.submissionTime,
-      sortable: true,
-      format: (row) =>
+      selector: (row) =>
         row.submissionTime
           ? format(new Date(row.submissionTime), "yyyy-MM-dd HH:mm:ss")
-          : "N/A", // Check for valid submission time
+          : "N/A",
+      sortable: true,
     },
-
-    { name: "User Name", selector: (row) => row.userName, sortable: true },
-
+    {
+      name: "User Name",
+      selector: (row) => row.userName,
+      sortable: true,
+    },
     {
       name: "Vehicle Number",
       selector: (row) => row.vehicleNumber,
@@ -251,7 +179,7 @@ export default function Admin() {
       name: "Actions",
       cell: (row) => (
         <div>
-          <button onClick={() => handleAccept(row._id)}>Accept</button>
+          <button onClick={() => handleDone(row._id)}>Done</button>
           <button onClick={() => handleDelete(row._id)}>Delete</button>
         </div>
       ),
@@ -273,7 +201,7 @@ export default function Admin() {
   return (
     <FixedContainer>
       <div style={{ width: "100%" }}>
-        <h1>Admin Page</h1>
+        <h1>Accepted Bookings</h1>
         <Header>
           <SearchInput
             type="text"
@@ -281,30 +209,12 @@ export default function Admin() {
             value={filterText}
             onChange={(e) => setFilterText(e.target.value)}
           />
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "flex-start",
-              gap: "20px",
-            }}
-          >
-            <button onClick={() => handleStatusChange("accept")}>Accept</button>
+        </Header>
+        <Header>
+          <CenteredButtonContainer>
             <button onClick={() => handleStatusChange("done")}>Done</button>
             <button onClick={() => handleStatusChange("delete")}>Delete</button>
-          </div>
-          <LimitContainer>
-            <LimitDisplay>Current Booking Limit: {bookingLimit}</LimitDisplay>
-            <LimitInput
-              type="number"
-              value={newLimit}
-              onChange={(e) => setNewLimit(e.target.value)}
-              placeholder="New limit"
-              min="1"
-            />
-            <UpdateButton onClick={handleUpdateLimit}>
-              Update Limit
-            </UpdateButton>
-          </LimitContainer>
+          </CenteredButtonContainer>
         </Header>
         <TableHeader>
           <DataTable

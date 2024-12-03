@@ -1,6 +1,6 @@
 const Booking = require('../models/booking');
 const BookingLimit = require('../models/bookingLimit');
-
+// const Booking = require('../models/bookingModel');
 // Get blocked dates (dates with 5 or more bookings)
 exports.getBlockedDates = async (req, res) => {
   try {
@@ -60,14 +60,22 @@ exports.createBooking = async (req, res) => {
 };
 
 // Keep the existing getAllBookings function
+// In your bookingController.js
 exports.getAllBookings = async (req, res) => {
   try {
-    const bookings = await Booking.find();
+    const status = req.query.status; // Get the status from the query parameter
+    let bookings;
+    if (status === 'accept') {
+      bookings = await Booking.find({ status: 'accept' }); // Filter for accepted bookings
+    } else {
+      bookings = await Booking.find(); // Return all bookings if no status is specified
+    }
     res.json(bookings);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 };
+
 
 //  get the current booking limit
 exports.getBookingLimit = async (req, res) => {
@@ -101,3 +109,46 @@ exports.updateBookingLimit = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+exports.updateBookingStatus = async (req, res) => {
+  const { id } = req.params;
+  const { status } = req.body;
+
+  try {
+    const updatedBooking = await Booking.findByIdAndUpdate(id, { status }, { new: true });
+    res.json(updatedBooking);
+  } catch (error) {
+    res.status(500).json({ message: 'Error updating booking status' });
+  }
+};
+
+
+exports.getAcceptedBookings = async (req, res) => {
+  try {
+    const acceptedBookings = await Booking.find({ status: 'accept' });
+    res.json(acceptedBookings);
+  } catch (error) {
+    console.error('Error fetching accepted bookings:', error);
+    res.status(500).json({ message: 'Error fetching accepted bookings' });
+  }
+};
+
+//delete booking
+exports.deleteBooking = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deletedBooking = await Booking.findByIdAndDelete(id);
+
+    if (!deletedBooking) {
+      return res.status(404).json({ message: 'Booking not found' });
+    }
+
+    res.status(200).json({ message: 'Booking deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting booking:', error);
+    res.status(500).json({ message: 'Server error while deleting booking' });
+  }
+};
+
+
+
+
