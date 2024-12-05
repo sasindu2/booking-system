@@ -3,6 +3,7 @@ import DataTable from "react-data-table-component";
 import styled from "styled-components";
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom"; // Assuming you're using React Router for navigation
+import Swal from "sweetalert2";
 
 const Header = styled.div`
   display: flex;
@@ -124,7 +125,9 @@ export default function Admin() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/bookings");
+        const response = await fetch(
+          "http://localhost:5000/api/bookings/pending"
+        );
         const result = await response.json();
         setData(result);
       } catch (error) {
@@ -164,12 +167,36 @@ export default function Admin() {
 
       // Update the state to remove the accepted booking
       setData((prevData) => prevData.filter((item) => item._id !== id));
+
+      Swal.fire({
+        title: "Accepted!",
+        text: "The booking has been accepted successfully.",
+        icon: "success",
+        confirmButtonText: "Cool",
+      });
     } catch (error) {
       console.error("Error updating booking status:", error);
+      Swal.fire({
+        title: "Error!",
+        text: "Failed to accept the booking.",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
     }
   };
 
   const handleUpdateLimit = async () => {
+    // Validate input
+    if (!newLimit || isNaN(parseInt(newLimit)) || parseInt(newLimit) <= 0) {
+      Swal.fire({
+        title: "Invalid Input",
+        text: "Please enter a valid positive number for the booking limit.",
+        icon: "warning",
+        confirmButtonText: "Got it",
+      });
+      return;
+    }
+
     try {
       const response = await fetch("http://localhost:5000/api/bookings/limit", {
         method: "PUT",
@@ -182,21 +209,42 @@ export default function Admin() {
       if (response.ok) {
         setBookingLimit(result.limit);
         setNewLimit("");
-        alert("Booking limit updated successfully!");
+        Swal.fire({
+          title: "Success!",
+          text: "Booking limit updated successfully!",
+          icon: "success",
+          confirmButtonText: "Great",
+        });
       } else {
         throw new Error(result.message);
       }
     } catch (error) {
       console.error("Error updating booking limit:", error);
-      alert("Failed to update booking limit. Please try again.");
+      Swal.fire({
+        title: "Error!",
+        text: "Failed to update booking limit. Please try again.",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
     }
   };
+
   const handleDelete = async (id) => {
-    if (!window.confirm("Are you sure you want to delete this booking?")) {
+    // Show confirmation dialog before deletion
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "Do you want to delete this booking?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    });
+
+    if (!result.isConfirmed) {
       return;
     }
 
-    setIsLoading(true);
     try {
       const response = await fetch(`http://localhost:5000/api/bookings/${id}`, {
         method: "DELETE",
@@ -204,16 +252,24 @@ export default function Admin() {
 
       if (response.ok) {
         setData((prevData) => prevData.filter((booking) => booking._id !== id));
-        alert("Booking deleted successfully");
+        Swal.fire({
+          title: "Deleted!",
+          text: "The booking has been deleted successfully.",
+          icon: "success",
+          confirmButtonText: "Cool",
+        });
       } else {
         const errorData = await response.json();
         throw new Error(errorData.message || "Failed to delete booking");
       }
     } catch (error) {
       console.error("Error deleting booking:", error);
-      alert(error.message || "An error occurred while deleting the booking");
-    } finally {
-      setIsLoading(false);
+      Swal.fire({
+        title: "Error!",
+        text: error.message || "An error occurred while deleting the booking",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
     }
   };
   const columns = [
@@ -290,7 +346,9 @@ export default function Admin() {
           >
             <button onClick={() => handleStatusChange("accept")}>Accept</button>
             <button onClick={() => handleStatusChange("done")}>Done</button>
-            <button onClick={() => handleStatusChange("delete")}>Delete</button>
+            <button onClick={() => handleStatusChange("completed")}>
+              Complete
+            </button>
           </div>
           <LimitContainer>
             <LimitDisplay>Current Booking Limit: {bookingLimit}</LimitDisplay>

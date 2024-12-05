@@ -10,6 +10,10 @@ router.post('/', bookingController.createBooking);
 router.get('/', bookingController.getAllBookings);
 
 router.get('/accepted', bookingController.getAcceptedBookings);
+router.get('/pending', bookingController.getpendingBookings);
+router.get('/done', bookingController.getdoneBookings);
+router.get('/completed', bookingController.getcompletedBookings);
+
 
 // getting blocked dates
 router.get('/blocked-dates', bookingController.getBlockedDates);

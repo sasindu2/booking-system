@@ -26,7 +26,7 @@ const BookingSchema = new mongoose.Schema({
   status:{
     type:String,
     required:true,
-    enum: ['pending', 'accept', 'done', 'delete'], 
+    enum: ['pending', 'accept', 'done', 'delete','completed'], 
   }
 });
 

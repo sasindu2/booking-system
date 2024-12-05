@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 
 const Header = styled.div`
   display: flex;
-  justify-content: center; // Center the buttons
+  justify-content: center;
   align-items: center;
   margin-bottom: 20px;
 `;
@@ -74,63 +74,30 @@ const CenteredButtonContainer = styled.div`
   width: 100%;
 `;
 
-export default function AcceptPage() {
+export default function CompletePage() {
   const [filterText, setFilterText] = useState("");
   const [data, setData] = useState([]);
   const navigate = useNavigate();
+
   const handleStatusChange = (status) => {
-    navigate(`/status/${status}`); // Navigate to a specific page based on status
+    navigate(`/status/${status}`);
   };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "http://localhost:5000/api/bookings/accepted"
+          "http://localhost:5000/api/bookings/completed"
         );
         const result = await response.json();
         setData(result);
       } catch (error) {
-        console.error("Error fetching accepted bookings:", error);
+        console.error("Error fetching completed bookings:", error);
       }
     };
 
     fetchData();
   }, []);
-
-  const handleDone = async (id) => {
-    try {
-      const response = await fetch(
-        `http://localhost:5000/api/bookings/${id}/status`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ status: "done" }),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("Failed to update booking status");
-      }
-
-      // Update the state to remove the done booking
-      setData((prevData) => prevData.filter((item) => item._id !== id));
-      Swal.fire({
-        title: "Accepted!",
-        text: "The booking has been accepted successfully.",
-        icon: "success",
-        confirmButtonText: "Cool",
-      });
-    } catch (error) {
-      console.error("Error updating booking status:", error);
-      Swal.fire({
-        title: "Error!",
-        text: "Failed to accept the booking.",
-        icon: "error",
-        confirmButtonText: "OK",
-      });
-    }
-  };
 
   const handleDelete = async (id) => {
     // Show confirmation dialog before deletion
@@ -186,10 +153,10 @@ export default function AcceptPage() {
       sortable: true,
     },
     {
-      name: "Submission Time",
+      name: "Completion Time",
       selector: (row) =>
-        row.submissionTime
-          ? format(new Date(row.submissionTime), "yyyy-MM-dd HH:mm:ss")
+        row.completionTime
+          ? format(new Date(row.completionTime), "yyyy-MM-dd HH:mm:ss")
           : "N/A",
       sortable: true,
     },
@@ -212,7 +179,6 @@ export default function AcceptPage() {
       name: "Actions",
       cell: (row) => (
         <div>
-          <button onClick={() => handleDone(row._id)}>Done</button>
           <button onClick={() => handleDelete(row._id)}>Delete</button>
         </div>
       ),
@@ -225,8 +191,8 @@ export default function AcceptPage() {
       item.userName.toLowerCase().includes(filterText.toLowerCase()) ||
       item.vehicleNumber.toLowerCase().includes(filterText.toLowerCase()) ||
       item.phoneNumber.includes(filterText) ||
-      (item.submissionTime &&
-        format(new Date(item.submissionTime), "yyyy-MM-dd HH:mm:ss").includes(
+      (item.completionTime &&
+        format(new Date(item.completionTime), "yyyy-MM-dd HH:mm:ss").includes(
           filterText
         ))
   );
@@ -234,7 +200,7 @@ export default function AcceptPage() {
   return (
     <FixedContainer>
       <div style={{ width: "100%" }}>
-        <h1>Accepted Bookings</h1>
+        <h1>Completed Bookings</h1>
         <Header>
           <SearchInput
             type="text"
@@ -245,10 +211,8 @@ export default function AcceptPage() {
         </Header>
         <Header>
           <CenteredButtonContainer>
+            <button onClick={() => handleStatusChange("accept")}>Accept</button>
             <button onClick={() => handleStatusChange("done")}>Done</button>
-            <button onClick={() => handleStatusChange("completed")}>
-              complete
-            </button>
           </CenteredButtonContainer>
         </Header>
         <TableHeader>

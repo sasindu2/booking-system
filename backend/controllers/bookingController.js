@@ -131,6 +131,33 @@ exports.getAcceptedBookings = async (req, res) => {
     res.status(500).json({ message: 'Error fetching accepted bookings' });
   }
 };
+exports.getpendingBookings = async (req, res) => {
+  try {
+    const pendingBookings = await Booking.find({ status: 'pending' });
+    res.json(pendingBookings);
+  } catch (error) {
+    console.error('Error fetching pending bookings:', error);
+    res.status(500).json({ message: 'Error fetching pending bookings' });
+  }
+};
+exports.getdoneBookings = async (req, res) => {
+  try {
+    const doneBookings = await Booking.find({ status: 'done' });
+    res.json(doneBookings);
+  } catch (error) {
+    console.error('Error fetching done bookings:', error);
+    res.status(500).json({ message: 'Error fetching done bookings' });
+  }
+};
+exports.getcompletedBookings = async (req, res) => {
+  try {
+    const completedBookings = await Booking.find({ status: 'completed' });
+    res.json(completedBookings);
+  } catch (error) {
+    console.error('Error fetching completed bookings:', error);
+    res.status(500).json({ message: 'Error fetching completed bookings' });
+  }
+};
 
 //delete booking
 exports.deleteBooking = async (req, res) => {

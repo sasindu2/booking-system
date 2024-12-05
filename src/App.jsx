@@ -3,6 +3,7 @@ import UserForm from "./pages/Booking/Booking";
 import Admin from "./pages/Admin/Admin";
 import AcceptPage from "./pages/components/accept/acceptbookings";
 import DonePage from "./pages/components/done/donebookings";
+import CompletePage from "./pages/components/complete/completebooking";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -15,6 +16,7 @@ function App() {
           <Route path="/admin" element={<Admin />} />
           <Route path="/status/accept" element={<AcceptPage />} />
           <Route path="/status/done" element={<DonePage />} />
+          <Route path="/status/completed" element={<CompletePage />} />
         </Routes>
       </BrowserRouter>
     </>
