@@ -208,12 +208,19 @@ export default function CompletePage() {
             value={filterText}
             onChange={(e) => setFilterText(e.target.value)}
           />
-        </Header>
-        <Header>
-          <CenteredButtonContainer>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-start",
+              gap: "20px",
+            }}
+          >
             <button onClick={() => handleStatusChange("accept")}>Accept</button>
             <button onClick={() => handleStatusChange("done")}>Done</button>
-          </CenteredButtonContainer>
+            <button onClick={() => handleStatusChange("completed")}>
+              Complete
+            </button>
+          </div>
         </Header>
         <TableHeader>
           <DataTable

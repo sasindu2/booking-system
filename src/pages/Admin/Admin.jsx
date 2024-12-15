@@ -105,13 +105,6 @@ const LimitDisplay = styled.div`
   color: black;
 `;
 
-const LimitForm = styled.form`
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 20px;
-`;
-
 export default function Admin() {
   const [filterText, setFilterText] = useState("");
   const [data, setData] = useState([]);

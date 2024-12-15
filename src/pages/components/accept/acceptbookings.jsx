@@ -242,14 +242,19 @@ export default function AcceptPage() {
             value={filterText}
             onChange={(e) => setFilterText(e.target.value)}
           />
-        </Header>
-        <Header>
-          <CenteredButtonContainer>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-start",
+              gap: "20px",
+            }}
+          >
+            <button onClick={() => handleStatusChange("accept")}>Accept</button>
             <button onClick={() => handleStatusChange("done")}>Done</button>
             <button onClick={() => handleStatusChange("completed")}>
-              complete
+              Complete
             </button>
-          </CenteredButtonContainer>
+          </div>
         </Header>
         <TableHeader>
           <DataTable
