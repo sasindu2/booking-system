@@ -103,31 +103,35 @@ const UserForm = () => {
       <div className="PageContainer">
         <div className="FormContainer">
           <h1>St'Anns Service</h1>
-          <h2>Booking system</h2>
+          <h2>
+            <strong>Booking system</strong>
+          </h2>
+
           <form onSubmit={handleSubmit(onSubmit)}>
+            {/* User Name */}
             <label className="InputContainer">User Name</label>
             <input
               className="Input"
               type="text"
               {...register("userName", { required: true })}
             />
-            <br />
             {errors.userName && (
               <span className="ErrorMessage">User Name is required</span>
             )}
-            <br />
+
+            {/* Vehicle Number */}
             <label className="InputContainer">Vehicle Number</label>
             <input
               className="Input"
               type="text"
-              {...register("vehicleNumber", { required: true })}
               placeholder="ex, ABC-1234"
+              {...register("vehicleNumber", { required: true })}
             />
-            <br />
             {errors.vehicleNumber && (
               <span className="ErrorMessage">Vehicle Number is required</span>
             )}
-            <br />
+
+            {/* Phone Number */}
             <label className="InputContainer">Phone Number</label>
             <input
               className="Input"
@@ -137,13 +141,13 @@ const UserForm = () => {
                 pattern: /^[0-9]{10}$/,
               })}
             />
-            <br />
             {errors.phoneNumber && (
               <span className="ErrorMessage">
                 Phone Number is required and should be 10 digits
               </span>
             )}
-            <br />
+
+            {/* Booking Date */}
             <label className="InputContainer">Booking Date</label>
             <DatePicker
               className="StyledDatePicker"
@@ -155,11 +159,12 @@ const UserForm = () => {
               minDate={new Date()}
               placeholderText="Select a date"
             />
-            <br />
             {startDate === null && (
               <span className="ErrorMessage">Booking Date is required</span>
             )}
-            <br />
+            <div style={{ marginTop: "20px" }}></div>
+
+            {/* Submit Button */}
             <div className="ButtonContainer">
               <button
                 className="Button"
@@ -169,11 +174,10 @@ const UserForm = () => {
                 {isSubmitting ? "Submitting..." : "Submit"}
               </button>
             </div>
-            {submitError && <p className="ErrorMessage">{submitError}</p>}
+
+            {/* Footer */}
             <div className="condition-footer">
-              <a href="#">Terms of Use | </a>
-              <span className="privacy-policy"></span>
-              <a href="#">Privacy Policy</a>
+              <a href="#">Terms of Use</a> | <a href="#">Privacy Policy</a>
             </div>
           </form>
         </div>

@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/styled": "^11.14.0",
+    "@mui/icons-material": "^6.2.0",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
     "date-fns": "^3.6.0",
@@ -19,9 +21,10 @@
     "react-data-table-component": "^7.6.2",
     "react-datepicker": "^7.3.0",
     "react-dom": "^18.3.1",
+    "react-fontawesome": "^1.7.1",
     "react-hook-form": "^7.52.1",
     "styled-components": "^6.1.12",
-    "sweetalert2": "^11.14.3"
+    "sweetalert2": "^11.6.13"
   },
   "devDependencies": {
     "@types/react": "^18.3.3",

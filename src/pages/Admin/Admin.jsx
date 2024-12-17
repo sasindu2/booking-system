@@ -1,109 +1,111 @@
 import React, { useState, useEffect } from "react";
 import DataTable from "react-data-table-component";
-import styled from "styled-components";
+// import styled from "styled-components";
 import { format } from "date-fns";
-import { useNavigate } from "react-router-dom"; // Assuming you're using React Router for navigation
+import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import "./admin.css";
+import { Check, Delete } from "@mui/icons-material";
 
-const Header = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-`;
-const SearchInput = styled.input`
-  width: 300px;
-  padding: 10px 40px 10px 20px;
-  font-size: 16px;
-  border: none;
-  border-radius: 0px;
-  background-color: #f0f0f0;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-  color: black;
+// const Header = styled.div`
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+//   margin-bottom: 20px;
+// `;
+// const SearchInput = styled.input`
+//   width: 300px;
+//   padding: 10px 40px 10px 20px;
+//   font-size: 16px;
+//   border: none;
+//   border-radius: 0px;
+//   background-color: #f0f0f0;
+//   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+//   transition: all 0.3s ease;
+//   color: black;
 
-  &:focus {
-    outline: none;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  }
+//   &:focus {
+//     outline: none;
+//     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+//   }
 
-  &::placeholder {
-    color: #999;
-  }
+//   &::placeholder {
+//     color: #999;
+//   }
 
-  /* Add a search icon */
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23999' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z'%3E%3C/path%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: calc(100% - 10px) center;
-`;
+//   /* Add a search icon */
+//   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23999' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z'%3E%3C/path%3E%3C/svg%3E");
+//   background-repeat: no-repeat;
+//   background-position: calc(100% - 10px) center;
+// `;
 
-const TableHeader = styled.div`
-  height: 400px; /* Define a fixed height for the table container */
-  overflow-y: auto;
+// const TableHeader = styled.div`
+//   height: 400px; /* Define a fixed height for the table container */
+//   overflow-y: auto;
 
-  /* Hide scrollbar icon for Chrome, Safari, and Opera */
-  ::-webkit-scrollbar {
-    width: 0px; /* Hides the scrollbar width */
-  }
+//   /* Hide scrollbar icon for Chrome, Safari, and Opera */
+//   ::-webkit-scrollbar {
+//     width: 0px; /* Hides the scrollbar width */
+//   }
 
-  /* Hide scrollbar icon for Firefox */
-  scrollbar-width: thin; /* Makes the scrollbar very thin */
-  scrollbar-color: transparent transparent; /* Makes the scrollbar invisible */
+//   /* Hide scrollbar icon for Firefox */
+//   scrollbar-width: thin; /* Makes the scrollbar very thin */
+//   scrollbar-color: transparent transparent; /* Makes the scrollbar invisible */
 
-  /* Hide scrollbar icon for IE, Edge */
-  -ms-overflow-style: none; /* Hides the scrollbar icon for IE and Edge */
+//   /* Hide scrollbar icon for IE, Edge */
+//   -ms-overflow-style: none; /* Hides the scrollbar icon for IE and Edge */
 
-  .rdt_TableHeadRow {
-    background-color: #4caf50; /* Change this color to your preference */
-  }
-  .rdt_TableCol {
-    color: white; /* Change text color to your preference */
-  }
-`;
-const FixedContainer = styled.div`
-  position: fixed;
+//   .rdt_TableHeadRow {
+//     background-color: #4caf50; /* Change this color to your preference */
+//   }
+//   .rdt_TableCol {
+//     color: white; /* Change text color to your preference */
+//   }
+// `;
+// const FixedContainer = styled.div`
+//   position: fixed;
 
-  top: 0;
-  left: 10px;
-  right: 10px;
-  bottom: 0;
-  // overflow-y: auto;
-  padding: 20px;
-  background-color: #fff; // Add a background color to ensure content below doesn't show through
-`;
-const LimitContainer = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 10px;
-`;
+//   top: 0;
+//   left: 10px;
+//   right: 10px;
+//   bottom: 0;
+//   // overflow-y: auto;
+//   padding: 20px;
+//   background-color: #fff; // Add a background color to ensure content below doesn't show through
+// `;
+// const LimitContainer = styled.div`
+//   display: flex;
+//   align-items: center;
+//   gap: 10px;
+// `;
 
-const LimitInput = styled.input`
-  width: 60px;
-  padding: 5px;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-`;
+// const LimitInput = styled.input`
+//   width: 60px;
+//   padding: 5px;
+//   font-size: 14px;
+//   border: 1px solid #ccc;
+//   border-radius: 4px;
+// `;
 
-const UpdateButton = styled.button`
-  padding: 5px 10px;
-  font-size: 14px;
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+// const UpdateButton = styled.button`
+//   padding: 5px 10px;
+//   font-size: 14px;
+//   background-color: #4caf50;
+//   color: white;
+//   border: none;
+//   border-radius: 4px;
+//   cursor: pointer;
 
-  &:hover {
-    background-color: #45a049;
-  }
-`;
-const LimitDisplay = styled.div`
-  font-size: 18px;
-  font-weight: bold;
-  margin-top: 5px;
-  color: black;
-`;
+//   &:hover {
+//     background-color: #45a049;
+//   }
+// `;
+// const LimitDisplay = styled.div`
+//   font-size: 18px;
+//   font-weight: bold;
+//   margin-top: 5px;
+//   color: black;
+// `;
 
 export default function Admin() {
   const [filterText, setFilterText] = useState("");
@@ -298,10 +300,29 @@ export default function Admin() {
     },
     {
       name: "Actions",
+      selector: "id",
       cell: (row) => (
-        <div>
-          <button onClick={() => handleAccept(row._id)}>Accept</button>
-          <button onClick={() => handleDelete(row._id)}>Delete</button>
+        <div style={{ display: "flex", gap: "10px" }}>
+          <button
+            onClick={() => handleAccept(row._id)}
+            style={{
+              background: "transparent",
+              border: "none",
+              cursor: "pointer",
+            }}
+          >
+            <Check style={{ color: "green", fontSize: "20px" }} />
+          </button>
+          <button
+            onClick={() => handleDelete(row._id)}
+            style={{
+              background: "transparent",
+              border: "none",
+              cursor: "pointer",
+            }}
+          >
+            <Delete style={{ color: "red", fontSize: "20px" }} />
+          </button>
         </div>
       ),
     },
@@ -318,55 +339,74 @@ export default function Admin() {
           filterText
         ))
   );
+  const customStyles = {
+    headRow: {
+      style: {
+        backgroundColor: "#4caf50",
+        color: "white",
+        fontWeight: "bold",
+        fontSize: "16px",
+      },
+    },
+    headCells: {
+      style: {
+        color: "white",
+      },
+    },
+  };
 
   return (
-    <FixedContainer>
-      <div style={{ width: "100%" }}>
+    <div className="fixed-container">
+      <div className="content-wrapper">
         <h1>Admin Page</h1>
-        <Header>
-          <SearchInput
+        <div className="header">
+          <input
+            className="search-input"
             type="text"
             placeholder="Search..."
             value={filterText}
             onChange={(e) => setFilterText(e.target.value)}
           />
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "flex-start",
-              gap: "20px",
-            }}
-          >
+
+          <div className="button-container">
             <button onClick={() => handleStatusChange("accept")}>Accept</button>
             <button onClick={() => handleStatusChange("done")}>Done</button>
             <button onClick={() => handleStatusChange("completed")}>
               Complete
             </button>
           </div>
-          <LimitContainer>
-            <LimitDisplay>Current Booking Limit: {bookingLimit}</LimitDisplay>
-            <LimitInput
+
+          {/* Booking Limit Section */}
+          <div className="limit-container">
+            <div className="limit-display">
+              Current Booking Limit: {bookingLimit}
+            </div>
+            <input
+              className="limit-input"
               type="number"
               value={newLimit}
               onChange={(e) => setNewLimit(e.target.value)}
-              placeholder="New limit"
+              placeholder="New "
               min="1"
             />
-            <UpdateButton onClick={handleUpdateLimit}>
-              Update Limit
-            </UpdateButton>
-          </LimitContainer>
-        </Header>
-        <TableHeader>
+            <button className="update-button" onClick={handleUpdateLimit}>
+              Update
+            </button>
+          </div>
+        </div>
+
+        {/* Table */}
+        <div className="table-header">
           <DataTable
             columns={columns}
             data={filteredData}
             pagination
             highlightOnHover
             striped
+            customStyles={customStyles}
           />
-        </TableHeader>
+        </div>
       </div>
-    </FixedContainer>
+    </div>
   );
 }
