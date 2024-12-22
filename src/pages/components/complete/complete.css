@@ -48,6 +48,7 @@
   .table-header {
     height: 400px;
     overflow-y: auto;
+    height: calc(100vh - 200px);
     
   }
   
