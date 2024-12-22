@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import DataTable from "react-data-table-component";
-// import styled from "styled-components";
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -185,9 +184,11 @@ export default function Admin() {
           ? format(new Date(row.submissionTime), "yyyy-MM-dd HH:mm:ss")
           : "N/A", // Check for valid submission time
     },
-
-    { name: "User Name", selector: (row) => row.userName, sortable: true },
-
+    {
+      name: "User Name",
+      selector: (row) => row.userName,
+      sortable: true,
+    },
     {
       name: "Vehicle Number",
       selector: (row) => row.vehicleNumber,
@@ -200,7 +201,7 @@ export default function Admin() {
     },
     {
       name: "Actions",
-      selector: "id",
+      selector: (row) => row.id, // Corrected to use a function
       cell: (row) => (
         <div style={{ display: "flex", gap: "10px" }}>
           <button

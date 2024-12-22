@@ -9,9 +9,11 @@ import { Check, Delete } from "@mui/icons-material";
 export default function AcceptPage() {
   const [filterText, setFilterText] = useState("");
   const [data, setData] = useState([]);
+  const [activeButton, setActiveButton] = useState("accept");
   const navigate = useNavigate();
 
   const handleStatusChange = (status) => {
+    setActiveButton(status);
     navigate(`/status/${status}`);
   };
 
@@ -141,7 +143,7 @@ export default function AcceptPage() {
     },
     {
       name: "Actions",
-      selector: "id",
+      selector: (row) => row._id, // Updated to a function-based selector
       cell: (row) => (
         <div style={{ display: "flex", gap: "10px" }}>
           <button
@@ -211,10 +213,29 @@ export default function AcceptPage() {
               onChange={(e) => setFilterText(e.target.value)}
             />
           </div>
-          <div className="accept-button-container">
-            <button onClick={() => handleStatusChange("accept")}>Accept</button>
-            <button onClick={() => handleStatusChange("done")}>Done</button>
-            <button onClick={() => handleStatusChange("completed")}>
+          <div className="action-buttons">
+            <button
+              onClick={() => handleStatusChange("accept")}
+              className={`status-btn ${
+                activeButton === "accept" ? "active" : ""
+              }`}
+            >
+              Accept
+            </button>
+            <button
+              onClick={() => handleStatusChange("done")}
+              className={`status-btn ${
+                activeButton === "done" ? "active" : ""
+              }`}
+            >
+              Done
+            </button>
+            <button
+              onClick={() => handleStatusChange("completed")}
+              className={`status-btn ${
+                activeButton === "completed" ? "active" : ""
+              }`}
+            >
               Complete
             </button>
           </div>
