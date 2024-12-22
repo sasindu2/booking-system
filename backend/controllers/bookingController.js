@@ -1,7 +1,5 @@
 const Booking = require('../models/booking');
 const BookingLimit = require('../models/bookingLimit');
-// const Booking = require('../models/bookingModel');
-// Get blocked dates (dates with 5 or more bookings)
 exports.getBlockedDates = async (req, res) => {
   try {
 
@@ -59,16 +57,16 @@ exports.createBooking = async (req, res) => {
   }
 };
 
-// Keep the existing getAllBookings function
+
 // In your bookingController.js
 exports.getAllBookings = async (req, res) => {
   try {
-    const status = req.query.status; // Get the status from the query parameter
+    const status = req.query.status; 
     let bookings;
     if (status === 'accept') {
-      bookings = await Booking.find({ status: 'accept' }); // Filter for accepted bookings
+      bookings = await Booking.find({ status: 'accept' }); 
     } else {
-      bookings = await Booking.find(); // Return all bookings if no status is specified
+      bookings = await Booking.find(); 
     }
     res.json(bookings);
   } catch (err) {
@@ -81,7 +79,7 @@ exports.getAllBookings = async (req, res) => {
 exports.getBookingLimit = async (req, res) => {
   try {
     const limitDoc = await BookingLimit.findOne();
-    const limit = limitDoc ? limitDoc.limit : 5; // Default to 5 if not set
+    const limit = limitDoc ? limitDoc.limit : 5; 
     res.json({ limit });
   } catch (err) {
     res.status(500).json({ message: err.message });

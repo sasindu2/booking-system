@@ -97,7 +97,7 @@ export default function DonePage() {
     },
     {
       name: "Actions",
-      selector: (row) => row.id, // Replace string-based selector with a function
+      selector: (row) => row.id,
       cell: (row) => (
         <div style={{ display: "flex", gap: "10px" }}>
           <button

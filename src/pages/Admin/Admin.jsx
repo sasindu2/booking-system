@@ -13,7 +13,7 @@ export default function Admin() {
   const [newLimit, setNewLimit] = useState("");
   const navigate = useNavigate();
   const handleStatusChange = (status) => {
-    navigate(`/status/${status}`); // Navigate to a specific page based on status
+    navigate(`/status/${status}`);
   };
 
   useEffect(() => {
@@ -172,7 +172,7 @@ export default function Admin() {
       selector: (row) =>
         row.bookingDate
           ? format(new Date(row.bookingDate), "yyyy-MM-dd")
-          : "N/A", // Check for valid date
+          : "N/A",
       sortable: true,
     },
     {
@@ -182,7 +182,7 @@ export default function Admin() {
       format: (row) =>
         row.submissionTime
           ? format(new Date(row.submissionTime), "yyyy-MM-dd HH:mm:ss")
-          : "N/A", // Check for valid submission time
+          : "N/A",
     },
     {
       name: "User Name",
@@ -201,7 +201,7 @@ export default function Admin() {
     },
     {
       name: "Actions",
-      selector: (row) => row.id, // Corrected to use a function
+      selector: (row) => row.id,
       cell: (row) => (
         <div style={{ display: "flex", gap: "10px" }}>
           <button

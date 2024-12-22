@@ -143,7 +143,7 @@ export default function AcceptPage() {
     },
     {
       name: "Actions",
-      selector: (row) => row._id, // Updated to a function-based selector
+      selector: (row) => row._id,
       cell: (row) => (
         <div style={{ display: "flex", gap: "10px" }}>
           <button

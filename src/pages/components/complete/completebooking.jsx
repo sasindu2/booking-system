@@ -33,7 +33,6 @@ export default function CompletePage() {
   }, []);
 
   const handleDelete = async (id) => {
-    // Show confirmation dialog before deletion
     const result = await Swal.fire({
       title: "Are you sure?",
       text: "Do you want to delete this booking?",

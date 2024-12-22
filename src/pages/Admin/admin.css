@@ -51,19 +51,19 @@
   }
   
   .table-header::-webkit-scrollbar {
-    width: 0px; /* Hide scrollbar for Chrome, Safari */
+    width: 0px; 
   }
   
   .table-header {
     scrollbar-width: thin;
-    scrollbar-color: transparent transparent; /* Hide scrollbar for Firefox */
-    -ms-overflow-style: none; /* Hide scrollbar for IE/Edge */
+    scrollbar-color: transparent transparent; 
+    -ms-overflow-style: none; 
     
   }
   .rdt_TableHead {
-    background-color: #4caf50; /* Green header */
-    color: white; /* White text */
-    font-weight: bold; /* Optional */
+    background-color: #4caf50;
+    color: white; 
+    font-weight: bold;
   }
   
   /* Table Styling */
@@ -145,65 +145,65 @@
   
   /* Style for individual buttons */
   .button-container button {
-    background-color: #9da29d; /* Green background */
-    color: rgb(0, 0, 0); /* White text */
-    border: none; /* Remove border */
-    padding: 10px 20px; /* Add some padding */
-    font-size: 18px; /* Font size */
-    cursor: pointer; /* Change cursor to pointer */
-    border-radius: 5px; /* Rounded corners */
-    transition: background-color 0.3s ease; /* Smooth background change */
+    background-color: #9da29d;
+    color: rgb(0, 0, 0);
+    border: none; 
+    padding: 10px 20px;
+    font-size: 18px; 
+    cursor: pointer; 
+    border-radius: 5px; 
+    transition: background-color 0.3s ease; 
     font-weight: bold;
     box-shadow: black;
   }
 /* Hover effect */
 .button-container button:hover {
-    background-color: #45a049; /* Darker green when hovered */
+    background-color: #45a049; 
     transition: color 0.06s ease; 
     color: white;
   }
   
   /* Active (clicked) effect */
   .button-container button:active {
-    background-color: #388e3c; /* Even darker green when clicked */
+    background-color: #388e3c;
   }
   
   /* Disabled state (if you want to use it) */
   .button-container button:disabled {
-    background-color: #b0bec5; /* Grey background for disabled button */
-    cursor: not-allowed; /* Disable pointer on disabled button */
+    background-color: #b0bec5; 
+    cursor: not-allowed; 
   }  
  
   /* Style for the update button */
 .update-button {
-    background-color: #9da29d; /* Blue background */
-    color: rgb(0, 0, 0); /* White text */
-    padding: 10px 20px; /* Button padding */
-    font-size: 16px; /* Font size */
-    border: none; /* Remove border */
-    border-radius: 5px; /* Rounded corners */
-    cursor: pointer; /* Pointer cursor */
-    transition: background-color 0.3s ease; /* Smooth background color transition */
+    background-color: #9da29d; 
+    color: rgb(0, 0, 0); 
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none; 
+    border-radius: 5px; 
+    cursor: pointer; 
+    transition: background-color 0.3s ease; 
     font-weight: bold;
   }
   
   /* Hover effect for the update button */
   .update-button:hover {
-    background-color: #45a049; /* Darker green on hover */
+    background-color: #45a049; 
     transition: color 0.06s ease; 
     color: white;
   }
   
   /* Active (clicked) effect for the update button */
   .update-button:active {
-    background-color: #388e3c; /* Even darker green when clicked */
+    background-color: #388e3c; 
     
     color: white;
   }
   
   /* Disabled state for the update button */
   .update-button:disabled {
-    background-color: #b0bec5; /* Grey background for disabled button */
-    cursor: not-allowed; /* Disable pointer on disabled button */
+    background-color: #b0bec5; 
+    cursor: not-allowed; 
   }
   
