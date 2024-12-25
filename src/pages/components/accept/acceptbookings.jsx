@@ -228,7 +228,7 @@ export default function AcceptPage() {
                 activeButton === "done" ? "active" : ""
               }`}
             >
-              Done
+              Arrived
             </button>
             <button
               onClick={() => handleStatusChange("completed")}
@@ -238,6 +238,9 @@ export default function AcceptPage() {
             >
               Complete
             </button>
+          </div>
+          <div className="admin-nav">
+            <button onClick={() => navigate("/admin")}>Admin Dashboard</button>
           </div>
         </div>
 

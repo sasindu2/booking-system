@@ -271,7 +271,7 @@ export default function Admin() {
 
           <div className="button-container">
             <button onClick={() => handleStatusChange("accept")}>Accept</button>
-            <button onClick={() => handleStatusChange("done")}>Done</button>
+            <button onClick={() => handleStatusChange("done")}>Arrived</button>
             <button onClick={() => handleStatusChange("completed")}>
               Complete
             </button>

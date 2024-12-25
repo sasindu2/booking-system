@@ -90,6 +90,30 @@
     background-color: #45a049;
   }
   
+
+  /* Admin Navigation Button */
+.admin-nav {
+  position: fixed; /* Keeps the button at a fixed position even when scrolling */
+  bottom: 520px; /* Moves the button to the bottom of the page */
+  right: 20px; /* Aligns the button to the right side */
+}
+
+.admin-nav button {
+  background-color: #ff1493;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.admin-nav button:hover {
+  background-color: #ff69b4;
+  transform: translateY(-2px);
+}
   .actions button {
     margin-right: 10px;
     padding: 5px 10px;
