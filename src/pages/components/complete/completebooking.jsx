@@ -185,7 +185,9 @@ export default function CompletePage() {
             </button>
           </div>
           <div className="admin-nav">
-            <button onClick={() => navigate("/admin")}>Admin Dashboard</button>
+            <button onClick={() => navigate("/BRRadmin")}>
+              Admin Dashboard
+            </button>
           </div>
         </div>
 

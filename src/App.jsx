@@ -17,16 +17,37 @@ function App() {
           <Route index element={<UserForm />} />
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route
-            path="/admin"
+            path="/BRRadmin"
             element={
               <ProtectedRoute>
                 <Admin />
               </ProtectedRoute>
             }
           />
-          <Route path="/status/accept" element={<AcceptPage />} />
-          <Route path="/status/done" element={<DonePage />} />
-          <Route path="/status/completed" element={<CompletePage />} />
+          <Route
+            path="/status/accept"
+            element={
+              <ProtectedRoute>
+                <AcceptPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/status/done"
+            element={
+              <ProtectedRoute>
+                <DonePage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/status/completed"
+            element={
+              <ProtectedRoute>
+                <CompletePage />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </BrowserRouter>
     </>

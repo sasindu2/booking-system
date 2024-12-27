@@ -9,17 +9,19 @@
     padding: 20px;
     background-color: #fff;
   }
+ 
   
   /* Page Header */
   .header {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    gap: 170px;
+     justify-content:space-between !important;
     margin-bottom: 20px;
     
     
+    
   }
-  
+
   /* Search Input */
   .search-input {
     width: 300px;
@@ -85,17 +87,18 @@
  /* Style for button container */
 .action-buttons{
   display: flex;
-  justify-content: center; 
-  align-items: center;    
+  justify-content: center;
+  align-items: center;     
   gap: 20px;  
-  width: 100%;
-  margin: 20px 0;
-  margin-left: 200px;
+  
+ 
+  
 }
 
 /* Button styling */
 .action-buttons button {
   background-color: #9da29d;
+  
   color: rgb(0, 0, 0);
   padding: 10px 20px;
   font-size: 18px;
@@ -108,9 +111,8 @@
 }
 /* Admin Navigation Button */
 .admin-nav {
-  position: fixed; 
-  bottom: 520px; 
-  right: 20px; 
+  margin-left: auto;
+  padding-right: 15px;
 }
 
 .admin-nav button {

@@ -12,11 +12,9 @@
   /* Page Header */
   .header {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    gap: 170px;
+     justify-content:space-between !important;
     margin-bottom: 20px;
-    
-    
   }
   
   /* Search Input */
@@ -92,11 +90,10 @@
   
 
   /* Admin Navigation Button */
-.admin-nav {
-  position: fixed; /* Keeps the button at a fixed position even when scrolling */
-  bottom: 520px; /* Moves the button to the bottom of the page */
-  right: 20px; /* Aligns the button to the right side */
-}
+  .admin-nav {
+    margin-left: auto;
+    padding-right: 15px;
+  }
 
 .admin-nav button {
   background-color: #ff1493;
@@ -114,14 +111,7 @@
   background-color: #ff69b4;
   transform: translateY(-2px);
 }
-  .actions button {
-    margin-right: 10px;
-    padding: 5px 10px;
-    border: none;
-    color: white;
-    cursor: pointer;
-    border-radius: 4px;
-  }
+  
   
   .actions button:first-child {
     background-color: #4caf50;
@@ -162,13 +152,15 @@
   
   
   /* Style for button container */
-.action-buttons{
+/* .action-buttons{
     display: flex;
     justify-content: center; 
     align-items: center;    
     gap: 20px;  
-    margin-right: 580px;
-}
+    position: absolute;
+    padding: 0;
+   
+} */
   
   /* Style for individual buttons */
   .action-buttons button {

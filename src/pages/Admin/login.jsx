@@ -35,7 +35,7 @@ const AdminLogin = () => {
           sameSite: "strict", // Protect against CSRF
         });
 
-        navigate("/admin");
+        navigate("/BRRadmin");
       } else {
         setError("Invalid credentials");
       }
