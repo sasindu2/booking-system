@@ -91,7 +91,7 @@ const loginUser = async (credentials) => {
     setTimeout(() => {
       if (
         credentials.username === "admin" &&
-        credentials.password === "service"
+        credentials.password === "brrfernando"
       ) {
         resolve({ success: true, token: "mock-jwt-token" });
       } else {
