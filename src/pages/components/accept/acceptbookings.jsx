@@ -3,60 +3,44 @@ import DataTable from "react-data-table-component";
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import "./admin.css";
+import "./accept.css";
 import { Check, Delete } from "@mui/icons-material";
 
-export default function Admin() {
+export default function AcceptPage() {
   const [filterText, setFilterText] = useState("");
   const [data, setData] = useState([]);
-  const [bookingLimit, setBookingLimit] = useState(5);
-  const [newLimit, setNewLimit] = useState("");
+  const [activeButton, setActiveButton] = useState("accept");
   const navigate = useNavigate();
+
   const handleStatusChange = (status) => {
+    setActiveButton(status);
     navigate(`/status/${status}`);
   };
 
   useEffect(() => {
-    // Check if user is authenticated
-    const token = localStorage.getItem("adminToken");
-    if (!token) {
-      navigate("/Admin/login");
-    }
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "http://localhost:5000/api/bookings/pending"
+          "http://localhost:5000/api/bookings/accepted"
         );
         const result = await response.json();
         setData(result);
       } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-    const fetchBookingLimit = async () => {
-      try {
-        const response = await fetch(
-          "http://localhost:5000/api/bookings/limit"
-        );
-        const result = await response.json();
-        setBookingLimit(result.limit);
-      } catch (error) {
-        console.error("Error fetching booking limit:", error);
+        console.error("Error fetching accepted bookings:", error);
       }
     };
 
     fetchData();
-    fetchBookingLimit();
   }, []);
 
-  const handleAccept = async (id) => {
+  const handleDone = async (id) => {
     try {
       const response = await fetch(
         `http://localhost:5000/api/bookings/${id}/status`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ status: "accept" }),
+          body: JSON.stringify({ status: "done" }),
         }
       );
 
@@ -64,9 +48,7 @@ export default function Admin() {
         throw new Error("Failed to update booking status");
       }
 
-      // Update the state to remove the accepted booking
       setData((prevData) => prevData.filter((item) => item._id !== id));
-
       Swal.fire({
         title: "Accepted!",
         text: "The booking has been accepted successfully.",
@@ -84,52 +66,7 @@ export default function Admin() {
     }
   };
 
-  const handleUpdateLimit = async () => {
-    // Validate input
-    if (!newLimit || isNaN(parseInt(newLimit)) || parseInt(newLimit) <= 0) {
-      Swal.fire({
-        title: "Invalid Input",
-        text: "Please enter a valid positive number for the booking limit.",
-        icon: "warning",
-        confirmButtonText: "Got it",
-      });
-      return;
-    }
-
-    try {
-      const response = await fetch("http://localhost:5000/api/bookings/limit", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ limit: parseInt(newLimit) }),
-      });
-      const result = await response.json();
-      if (response.ok) {
-        setBookingLimit(result.limit);
-        setNewLimit("");
-        Swal.fire({
-          title: "Success!",
-          text: "Booking limit updated successfully!",
-          icon: "success",
-          confirmButtonText: "Great",
-        });
-      } else {
-        throw new Error(result.message);
-      }
-    } catch (error) {
-      console.error("Error updating booking limit:", error);
-      Swal.fire({
-        title: "Error!",
-        text: "Failed to update booking limit. Please try again.",
-        icon: "error",
-        confirmButtonText: "OK",
-      });
-    }
-  };
-
   const handleDelete = async (id) => {
-    // Show confirmation dialog before deletion
     const result = await Swal.fire({
       title: "Are you sure?",
       text: "Do you want to delete this booking?",
@@ -171,6 +108,7 @@ export default function Admin() {
       });
     }
   };
+
   const columns = [
     {
       name: "Booking Date",
@@ -182,12 +120,11 @@ export default function Admin() {
     },
     {
       name: "Submission Time",
-      selector: (row) => row.submissionTime,
-      sortable: true,
-      format: (row) =>
+      selector: (row) =>
         row.submissionTime
           ? format(new Date(row.submissionTime), "yyyy-MM-dd HH:mm:ss")
           : "N/A",
+      sortable: true,
     },
     {
       name: "User Name",
@@ -206,11 +143,11 @@ export default function Admin() {
     },
     {
       name: "Actions",
-      selector: (row) => row.id,
+      selector: (row) => row._id,
       cell: (row) => (
         <div style={{ display: "flex", gap: "10px" }}>
           <button
-            onClick={() => handleAccept(row._id)}
+            onClick={() => handleDone(row._id)}
             style={{
               background: "transparent",
               border: "none",
@@ -263,45 +200,52 @@ export default function Admin() {
 
   return (
     <div className="fixed-container">
-      <div className="content-wrapper">
-        <h1>Admin Page</h1>
-        <div className="header">
-          <input
-            className="search-input"
-            type="text"
-            placeholder="Search..."
-            value={filterText}
-            onChange={(e) => setFilterText(e.target.value)}
-          />
+      <div style={{ width: "100%" }}>
+        <h1>Accepted Bookings</h1>
 
-          <div className="button-container">
-            <button onClick={() => handleStatusChange("accept")}>Accept</button>
-            <button onClick={() => handleStatusChange("done")}>Arrived</button>
-            <button onClick={() => handleStatusChange("completed")}>
+        <div className="header">
+          <div className="search-container">
+            <input
+              type="text"
+              className="search-input"
+              placeholder="Search..."
+              value={filterText}
+              onChange={(e) => setFilterText(e.target.value)}
+            />
+          </div>
+          <div className="action-buttons">
+            <button
+              onClick={() => handleStatusChange("accept")}
+              className={`status-btn ${
+                activeButton === "accept" ? "active" : ""
+              }`}
+            >
+              Accept
+            </button>
+            <button
+              onClick={() => handleStatusChange("done")}
+              className={`status-btn ${
+                activeButton === "done" ? "active" : ""
+              }`}
+            >
+              Arrived
+            </button>
+            <button
+              onClick={() => handleStatusChange("completed")}
+              className={`status-btn ${
+                activeButton === "completed" ? "active" : ""
+              }`}
+            >
               Complete
             </button>
           </div>
-
-          {/* Booking Limit Section */}
-          <div className="limit-container">
-            <div className="limit-display">
-              Current Booking Limit: {bookingLimit}
-            </div>
-            <input
-              className="limit-input"
-              type="number"
-              value={newLimit}
-              onChange={(e) => setNewLimit(e.target.value)}
-              placeholder="New "
-              min="1"
-            />
-            <button className="update-button" onClick={handleUpdateLimit}>
-              Update
+          <div className="admin-nav">
+            <button onClick={() => navigate("/BRRadmin")}>
+              Admin Dashboard
             </button>
           </div>
         </div>
 
-        {/* Table */}
         <div className="table-header">
           <DataTable
             columns={columns}

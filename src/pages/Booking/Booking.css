@@ -7,17 +7,7 @@ body {
   box-sizing: border-box;
   font-family: Arial, sans-serif; /
 }
-/* body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Arial', sans-serif;
- 
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  
-} */
+
 
 h1 {
   font-size: 32px;
@@ -46,7 +36,7 @@ h2 {
   margin: 0 auto;
   
   color: black;
-  /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); */
+ 
 }
 
 .InputContainer {
@@ -106,7 +96,7 @@ h2 {
   cursor: pointer;
   font: bold;
   width: 100%;
-  height: 42px; /* Reduce width to 50% */
+  height: 42px; 
 }
 
 .ErrorMessage {
