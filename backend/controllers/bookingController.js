@@ -1,5 +1,7 @@
 const Booking = require('../models/booking');
 const BookingLimit = require('../models/bookingLimit');
+const { sendBookingEmail } = require('../config/emailConfig');
+
 exports.getBlockedDates = async (req, res) => {
   try {
 
@@ -51,6 +53,15 @@ exports.createBooking = async (req, res) => {
     });
 
     const newBooking = await booking.save();
+    await sendBookingEmail({
+      userName,
+      vehicleNumber,
+      phoneNumber,
+      bookingDate,
+      submissionTime,
+      status:'pending'
+    });
+
     res.status(201).json(newBooking);
   } catch (err) {
     res.status(400).json({ message: err.message });
