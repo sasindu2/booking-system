@@ -19,7 +19,9 @@ export default function DonePage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/bookings/done");
+        const response = await fetch(
+          "https://stannsserviceabackend.vercel.app/api/bookings/done"
+        );
         const result = await response.json();
         setData(result);
       } catch (error) {
@@ -33,7 +35,7 @@ export default function DonePage() {
   const handleCompleted = async (id) => {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/bookings/${id}/status`,
+        `https://stannsserviceabackend.vercel.app/api/bookings/${id}/status`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },

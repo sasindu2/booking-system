@@ -25,7 +25,7 @@ export default function Admin() {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "http://localhost:5000/api/bookings/pending"
+          "https://stannsserviceabackend.vercel.app/api/bookings/pending"
         );
         const result = await response.json();
         setData(result);
@@ -36,7 +36,7 @@ export default function Admin() {
     const fetchBookingLimit = async () => {
       try {
         const response = await fetch(
-          "http://localhost:5000/api/bookings/limit"
+          "https://stannsserviceabackend.vercel.app/api/bookings/limit"
         );
         const result = await response.json();
         setBookingLimit(result.limit);
@@ -52,7 +52,7 @@ export default function Admin() {
   const handleAccept = async (id) => {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/bookings/${id}/status`,
+        `https://stannsserviceabackend.vercel.app/api/bookings/${id}/status`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -97,13 +97,16 @@ export default function Admin() {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/api/bookings/limit", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ limit: parseInt(newLimit) }),
-      });
+      const response = await fetch(
+        "https://stannsserviceabackend.vercel.app/api/bookings/limit",
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ limit: parseInt(newLimit) }),
+        }
+      );
       const result = await response.json();
       if (response.ok) {
         setBookingLimit(result.limit);
@@ -145,9 +148,12 @@ export default function Admin() {
     }
 
     try {
-      const response = await fetch(`http://localhost:5000/api/bookings/${id}`, {
-        method: "DELETE",
-      });
+      const response = await fetch(
+        `https://stannsserviceabackend.vercel.app/api/bookings/${id}`,
+        {
+          method: "DELETE",
+        }
+      );
 
       if (response.ok) {
         setData((prevData) => prevData.filter((booking) => booking._id !== id));

@@ -21,7 +21,7 @@ export default function AcceptPage() {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "http://localhost:5000/api/bookings/accepted"
+          "https://stannsserviceabackend.vercel.app/api/bookings/accepted"
         );
         const result = await response.json();
         setData(result);
@@ -36,7 +36,7 @@ export default function AcceptPage() {
   const handleDone = async (id) => {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/bookings/${id}/status`,
+        `https://stannsserviceabackend.vercel.app/api/bookings/${id}/status`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -82,9 +82,12 @@ export default function AcceptPage() {
     }
 
     try {
-      const response = await fetch(`http://localhost:5000/api/bookings/${id}`, {
-        method: "DELETE",
-      });
+      const response = await fetch(
+        `https://stannsserviceabackend.vercel.app/api/bookings/${id}`,
+        {
+          method: "DELETE",
+        }
+      );
 
       if (response.ok) {
         setData((prevData) => prevData.filter((booking) => booking._id !== id));

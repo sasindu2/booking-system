@@ -20,7 +20,7 @@ export default function CompletePage() {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "http://localhost:5000/api/bookings/completed"
+          "https://stannsserviceabackend.vercel.app/api/bookings/completed"
         );
         const result = await response.json();
         setData(result);
@@ -48,9 +48,12 @@ export default function CompletePage() {
     }
 
     try {
-      const response = await fetch(`http://localhost:5000/api/bookings/${id}`, {
-        method: "DELETE",
-      });
+      const response = await fetch(
+        `https://stannsserviceabackend.vercel.app/api/bookings/${id}`,
+        {
+          method: "DELETE",
+        }
+      );
 
       if (response.ok) {
         setData((prevData) => prevData.filter((booking) => booking._id !== id));

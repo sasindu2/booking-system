@@ -24,7 +24,7 @@ const UserForm = () => {
   const fetchBlockedDates = async () => {
     try {
       const response = await fetch(
-        "http://localhost:5000/api/bookings/blocked-dates"
+        "https://stannsserviceabackend.vercel.app/api/bookings/blocked-dates"
       );
       if (!response.ok) {
         throw new Error("Failed to fetch blocked dates");
@@ -66,13 +66,16 @@ const UserForm = () => {
     data.submissionTime = submissionTime;
 
     try {
-      const response = await fetch("http://localhost:5000/api/bookings", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
+      const response = await fetch(
+        "https://stannsserviceabackend.vercel.app/api/bookings",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        }
+      );
 
       if (response.ok) {
         Swal.fire({
