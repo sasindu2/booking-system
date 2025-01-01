@@ -18,10 +18,10 @@ export default function Admin() {
 
   useEffect(() => {
     // Check if user is authenticated
-    const token = localStorage.getItem("adminToken");
-    if (!token) {
-      navigate("/Admin/login");
-    }
+    // const token = localStorage.getItem("adminToken");
+    // if (!token) {
+    //   navigate("/admin/login");
+    // }
     const fetchData = async () => {
       try {
         const response = await fetch(
