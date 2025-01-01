@@ -19,6 +19,15 @@ const BookingSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
+  submissionTime: {
+    type: Date,
+    required: true
+  },
+  status:{
+    type:String,
+    required:true,
+    enum: ['pending', 'accept', 'done', 'delete','completed'], 
+  }
 });
 
 module.exports = mongoose.model('Booking', BookingSchema);

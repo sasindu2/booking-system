@@ -1,13 +1,10 @@
 // config/db.js
 const mongoose = require('mongoose');
+require('dotenv').config();
 
 const connectDB = async () => {
   try {
-    await mongoose.connect('mongodb+srv://sasindu:Sasindu1234@cluster1.gbslery.mongodb.net/service?retryWrites=true&w=majority&appName=Cluster1', {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-    console.log('MongoDB connected');
+    await mongoose.connect(process.env.MONGODB_URI);    console.log('MongoDB connected');
   } catch (err) {
     console.error(err.message);
     process.exit(1);

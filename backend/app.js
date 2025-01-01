@@ -1,22 +1,29 @@
-// app.js
+
+const dotenv = require('dotenv');
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const connectDB = require('./config/db');
-const bookingRoutes = require('./routes/bookingRoutes');
+const bookingRoutes = require('./routes/bookingRoutes'); 
 
+dotenv.config();
 const app = express();
 
 // Connect to MongoDB
 connectDB();
 
 // Middleware
-app.use(cors());
+app.use(cors({
+    origin: ['http://localhost:3000', 'https://your-frontend-domain.vercel.app'],
+    credentials: true
+  }));
 app.use(bodyParser.json());
 
 // Routes
-app.use('/api/bookings', bookingRoutes);
-app.get("/", (req, res) => res.json({done: 'yes'}))
+app.use('/api/bookings', bookingRoutes); 
+app.get("/", (req, res) => res.json({ done: 'yes' }));
+
+console.log('Starting server...');
 
 // Start the server
 const PORT = process.env.PORT || 5000;
