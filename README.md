@@ -38,5 +38,5 @@ Check out the live project here: https://stannsservicea.vercel.app (#)
 ## Project Setup 🚀
 1. Clone the repository:  
    ```bash
-   git clone [GitHub Link]
+   git clone https://github.com/sasindu2/booking-system.git
 
